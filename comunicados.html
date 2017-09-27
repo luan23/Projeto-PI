@@ -1,3 +1,22 @@
+<!--?php
+	include "conexao.php";
+	//Define o numero de itens por pagina
+	$itens_por_pagina = 2;
+	//Pega a pagina atual
+	$pagina = intval($_GET['pagina']);
+	//Select que irá definir quantos registros irão ser exibidos
+	$select_limit = mysql_query("SELECT * FROM cliente LIMIT $pagina, $itens_por_pagina") or die(mysql_error);
+	//Grava dados na Variavel
+	$dados = mysql_fetch_assoc($select_limit);
+	//Contagem dos dados
+	$num = mysql_num_rows($select_limit);
+	//pega quantidade total de objetos no DB
+	$select_total = mysql_query("SELECT * FROM cliente");
+	$num_total = mysql_num_rows($select_total);
+	//Define numero total de páginas
+	$num_paginas = ceil($num_total/$itens_por_pagina);
+	
+?> -->
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -74,7 +93,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="comunicados.html" target="_self"><i class="fa fa-fw fa-envelope"></i> Avisos e Comunicados</a>
                         </li>
                         <li>
@@ -102,8 +121,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Bem Vindo, Usuário!
-                                <small>A sua página inicial do sistema</small>
+                                Avisos e Comunicados
                             </h1>
                         </div>
                     </div>
@@ -112,72 +130,66 @@
                     <div class="row">
                         <div class="col-lg-12">
                            <div class="alert alert-info">
-                               <strong>Escolha no menu lateral o serviço que deseja.</strong>
+                               <strong>Clique em cima do aviso que desejar ler.</strong>
                            </div>
                         </div>
                     </div>
                     <!-- /.row -->
-                    
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="thumbnail">
-                                    <img alt="Bootstrap Thumbnail First" src="http://lorempixel.com/output/people-q-c-600-200-1.jpg" />
-                                    <div class="caption">
-                                            <h3>
-                                                    Notícia 1
-                                            </h3>
-                                            <p>
-                                                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                            </p>
-                                            <p>
-                                                    <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-                                            </p>
-                                    </div>
+                        <div class="col-lg-6">
+                            <div class="table-responsive">
+                                <!-- <?php if($num >0){ ?> -->
+                                <table class="table table-bordered table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Titulo</th>
+                                            <th>Setor</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--<?php do{ ?> -->
+                                        <tr class="success">
+                                            <td>Reforma do Prédio</td>
+                                            <td>Sindico</td>
+                                            <td>Nâo Lida</td>
+                                            <td><a href="ler_comunicado.php?codigo=" target="blank"><i class="fa fa-fw fa-envelope"><strong>Ver</strong> </a></td>
+                                        </tr>
+                                        <!--<?php }while($dados = mysql_fetch_assoc($select_limit))?> -->
+                                    </tbody>
+                                </table>
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <li>
+                                            <a href="clientes.php?pagina=0" aria-label="Previous">
+                                                <span aria-hidden="true">Inicio</span>
+                                            </a>
+                                        </li>
+                                        <!--<?php for($i=0; $i<$num_paginas; $i++){ 
+                                            $estilo = "";
+                                            if($pagina == $i)
+                                                $estilo = "class = 'active'";
+                                        ?> -->
+                                        <li <!-- <?php echo $estilo; ? -->  ><a href="clientes.php?pagina=<?php echo $i; ?>"><!-- <?php echo $i+1; ?>--></a></li>
+                                        <!-- <?php } ?> -->
+                                        <li>
+                                          <a href="clientes.php?pagina=<?php echo $num_paginas-1; ?>" aria-label="Next">
+                                            <span aria-hidden="true">Ultima</span>
+                                          </a>
+                                        </li>
+                                      </ul>
+                                </nav>
+                                <!-- <?php } ?> -->
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="thumbnail">
-                                    <img alt="Bootstrap Thumbnail Second" src="http://lorempixel.com/output/city-q-c-600-200-1.jpg" />
-                                    <div class="caption">
-                                            <h3>
-                                                    Notícia 1
-                                            </h3>
-                                            <p>
-                                                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                            </p>
-                                            <p>
-                                                    <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-                                            </p>
-                                    </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="thumbnail">
-                                    <img alt="Bootstrap Thumbnail Third" src="http://lorempixel.com/output/sports-q-c-600-200-1.jpg" />
-                                    <div class="caption">
-                                            <h3>
-                                                   Notícia 3
-                                            </h3>
-                                            <p>
-                                                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                            </p>
-                                            <p>
-                                                    <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-                                            </p>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                    
+                    </div>    
+                    <!-- /.row -->
                 </div>
                 <!-- /.container-fluid -->
-                
-             </div>
+            </div>
             <!-- /#page-wrapper -->
-            
         </div>
         <!-- /#wrappe -->
-            
         <!-- jQuery -->
         <script src="js/jquery.js"></script>
 
