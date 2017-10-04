@@ -1,22 +1,3 @@
-<!--?php
-	include "conexao.php";
-	//Define o numero de itens por pagina
-	$itens_por_pagina = 2;
-	//Pega a pagina atual
-	$pagina = intval($_GET['pagina']);
-	//Select que irá definir quantos registros irão ser exibidos
-	$select_limit = mysql_query("SELECT * FROM cliente LIMIT $pagina, $itens_por_pagina") or die(mysql_error);
-	//Grava dados na Variavel
-	$dados = mysql_fetch_assoc($select_limit);
-	//Contagem dos dados
-	$num = mysql_num_rows($select_limit);
-	//pega quantidade total de objetos no DB
-	$select_total = mysql_query("SELECT * FROM cliente");
-	$num_total = mysql_num_rows($select_total);
-	//Define numero total de páginas
-	$num_paginas = ceil($num_total/$itens_por_pagina);
-	
-?> -->
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -42,7 +23,7 @@
     </head>
     <body>
         <div id="wrapper">
-
+       
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -126,7 +107,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Ocorrências Fechadas
+                                Reclamações e Sugestões
                             </h1>
                         </div>
                     </div>
@@ -134,62 +115,55 @@
                     
                     <div class="row">
                         <div class="col-lg-12">
-                           <div class="alert alert-danger">
-                               <strong>Aqui você poderá ver ocorrências visualizadas pelo sindico com a resposta.(Caso o responsável responda.)</strong>
+                           <div class="alert alert-info">
+                               <strong>Preencha os campos para o registro.</strong>
                            </div>
                         </div>
                     </div>
                     <!-- /.row -->
                     
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="table-responsive">
-                                <!-- <?php if($num >0){ ?> -->
-                                <table class="table table-bordered table-hover table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Código da Ocorrência</th>
-                                            <th>Titulo</th>
-                                            <th>Resposta</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!--<?php do{ ?> -->
-                                        <tr class="success">
-                                            <td>1</td>
-                                            <td>Portão aberto depois das 23h</td>
-                                            <td>Foi passado uma advertência para a portaria, para que se tome medidas relacionado a isso</td>
-                                        </tr>
-                                        <!--<?php }while($dados = mysql_fetch_assoc($select_limit))?> -->
-                                    </tbody>
-                                </table>
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination">
-                                        <li>
-                                            <a href="clientes.php?pagina=0" aria-label="Previous">
-                                                <span aria-hidden="true">Inicio</span>
-                                            </a>
-                                        </li>
-                                        <!--<?php for($i=0; $i<$num_paginas; $i++){ 
-                                            $estilo = "";
-                                            if($pagina == $i)
-                                                $estilo = "class = 'active'";
-                                        ?> -->
-                                        <li <!-- <?php echo $estilo; ? -->  ><a href="clientes.php?pagina=<?php echo $i; ?>"><!-- <?php echo $i+1; ?>--></a></li>
-                                        <!-- <?php } ?> -->
-                                        <li>
-                                          <a href="clientes.php?pagina=<?php echo $num_paginas-1; ?>" aria-label="Next">
-                                            <span aria-hidden="true">Ultima</span>
-                                          </a>
-                                        </li>
-                                      </ul>
-                                </nav>
-                                <!-- <?php } ?> -->
-                            </div>
+                        <div class="col-md-offset-3 col-md-6 ">
+                            
+                            <form role="form">
+                                <fieldset>
+                                <div class="form-group">
+                                    <label>Selecione o Setor</label>
+                                    <select class="form-control">
+                                        <option value="#">Selecione</option>
+                                        <option value="1">Portaria</option>
+                                        <option value="2">Piscina</option>
+                                        <option value="3">Salão de Festas</option>
+                                        <option value="4">Estacionamento</option>
+                                        <option value="5">Elevadores</option>
+                                        <option value="6">Limpeza</option>
+                                        <option value="7">Sindico</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nome: </label>
+                                    <input class="form-control" type="text" placeholder="Digite seu nome" name="Nnome">
+                                </div>
+                                <div class="form-group">
+                                    <label>E- mail</label><br>
+                                    <input type="email" name="email" placeholder="Ex: maria@exemplo.com">
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Digite sua Reclamação ou Sugestão</label>
+                                        <textarea class="form-control" rows="3" name="Ntexto"></textarea>
+                                    </div>
+                                </div>
+                                    <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                </div>
+                                </fieldset>
+                            </form>
+                            
+                            
                         </div>
-                    </div>    
-                    <!-- /.row -->
-                 
+                    </div>
+                    
                 </div>
                 <!-- /.container-fluid -->
                 
