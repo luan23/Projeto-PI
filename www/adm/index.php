@@ -60,7 +60,7 @@
                                                 Aqui você pode cadastrar um novo usuário, tanto condômino quanto usuario administrativo.    
                                             </p>
                                             <p>
-                                                    <a class="btn btn-primary" href="#">Cadastrar</a>
+                                                <a class="btn btn-primary" href="cadastro_usuario.php">Cadastrar</a>
                                             </p>
                                     </div>
                             </div>
